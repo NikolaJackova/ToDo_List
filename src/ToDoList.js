@@ -26,7 +26,7 @@ function ToDoList() {
         },
         {
             name: "Velice dlouhý úkol",
-            description: "Toto je velice dlouhý úkol. Tento úkol je příkladem pro dlouhý popis úkolu. Nenese žádný jiný význam," +
+            description: "Toto je velice dlouhý úkol. Tento úkol je příkladem pro dlouhý popis úkolu. Nenese žádný jiný význam, " +
                 "pouze představuje příklad velice dlouhého popisu úkolu, který je na více řádků. Aby tu bylo ještě více řádků, " +
                 "přidám více textu. "
         }
@@ -37,6 +37,8 @@ function ToDoList() {
         const newTasks = [...tasks];
         newTasks.push({name: name, description: description});
         setTasks(newTasks);
+        setName("");
+        setDescription("");
     }
 
     const removeHandler = (task) => {

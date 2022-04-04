@@ -1,27 +1,21 @@
-@media screen and (max-width: 800px) {
-    .col-25, .col-75, input[type=submit] {
-        width: 100%;
-        margin-top: 0;
-    }
-
-}
-
 body {
     min-height: 100vh;
     background-color: #f2f2f2;
 }
 
-input[type=text], input[type=number], select, textarea {
+input[type=text], textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
 }
+
 label {
     padding: 12px 12px 12px 0;
     display: inline-block;
 }
+
 input[type=submit], button {
     background-color: #04AA6D;
     color: white;
@@ -32,6 +26,7 @@ input[type=submit], button {
     float: right;
     margin: 10px 0px 0px 0px;
 }
+
 input[type=submit]:hover, button:hover {
     background-color: #45a049;
 }
@@ -41,46 +36,89 @@ input[type=submit]:hover, button:hover {
     width: 25%;
     margin-top: 6px;
 }
+
 .col-75 {
     float: left;
     width: 75%;
     margin-top: 6px;
 }
+
 .row:after {
     content: "";
     display: table;
     clear: both;
 }
+
 .form-container {
     padding: 20px;
-    width:40%;
+    width: 40%;
     border-right: 2px solid #04AA6D;
 }
-.container{
-    display:flex;
+
+.container {
+    display: flex;
     justify-content: center;
 }
-.tasks{
-    width:60%;
-    padding: 10px;
+
+.tasks {
+    width: 60%;
+    padding: 20px;
 }
+
 * {
     box-sizing: border-box;
 }
-.task-info{
-    display:flex;
+
+.task-info {
+    display: flex;
     align-items: flex-end;
     justify-content: space-between;
 }
-.task-header{
+
+.task-header {
     text-align: left;
     margin-bottom: 5px;
 }
 
-button{
+button {
     margin: 0px 20px;
 }
 
 p {
-    text-align: justify;
+    text-align: left;
+}
+
+@media screen and (max-width: 800px) {
+    .col-25, .col-75, textarea {
+        width: 100%;
+        margin-top: 0;
+    }
+
+    button {
+        margin: 0px 0px 0px 10px;
+    }
+
+    .form-container, .tasks {
+        width: 100%;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+
+    .form-container {
+        border-right: none;
+        border-bottom: 2px solid #04AA6D;;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    input[type=submit] {
+        width: 100%;
+    }
+
+    .task-info {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
