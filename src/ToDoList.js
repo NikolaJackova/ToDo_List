@@ -2,48 +2,55 @@ import {useEffect, useState} from "react";
 import Task from "./Task";
 
 function ToDoList() {
-    const [tasks, setTasks] = useState([])
+    const [data, setData] = useState([])
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
 
     useEffect(() => {
-            setTasks(data);
-        },
-        []);
-
-    const data = [
-        {
-            name: "Nákup",
-            description: "Nakoupit potřebné jídlo na dovolenou."
-        },
-        {
-            name: "Semestrální práce",
-            description: "Začít pracovat na semestrální práci z předmětu NNPIA."
-        },
-        {
-            name: "Cvičení",
-            description: "Jít na cvičení do nového studia."
-        },
-        {
-            name: "Velice dlouhý úkol",
-            description: "Toto je velice dlouhý úkol. Tento úkol je příkladem pro dlouhý popis úkolu. Nenese žádný jiný význam, " +
-                "pouze představuje příklad velice dlouhého popisu úkolu, který je na více řádků. Aby tu bylo ještě více řádků, " +
-                "přidám více textu. "
-        }
-    ];
+        fetch(`${process.env.REACT_APP_TARGET}/`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Unable to get data: ' + response.statusText);
+            })
+            .then(json => setData(json));
+    }, [data])
 
     const addHandler = event => {
         event.preventDefault();
-        const newTasks = [...tasks];
-        newTasks.push({name: name, description: description});
-        setTasks(newTasks);
-        setName("");
-        setDescription("");
+
+        const newTask = {
+            name: name,
+            description: description
+        }
+
+        fetch(`${process.env.REACT_APP_TARGET}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newTask)
+        })
+            .then(r => r.json())
+            .finally(() => {
+                setName("");
+                setDescription("");
+            });
     }
 
     const removeHandler = (task) => {
-        const newTasks = tasks.filter(item => item !== task);
-        setTasks(newTasks);
+        fetch(`${process.env.REACT_APP_TARGET}/`+task.id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(r => r.json())
+            .finally(() => {
+                setName("");
+                setDescription("");
+            });
     }
 
     return (
@@ -66,12 +73,12 @@ function ToDoList() {
                                   onChange={(e) => setDescription(e.target.value)}></textarea>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row submit-row">
                     <input value="Add Task" type="submit"/>
                 </div>
             </form>
             <div className="tasks">
-                {tasks.map(task => <Task task={task} onClickAction={removeHandler}/>)}
+                {data.map(task => <Task task={task} onClickAction={removeHandler}/>)}
             </div>
         </div>
     )
